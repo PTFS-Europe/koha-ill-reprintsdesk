@@ -192,19 +192,6 @@ sub create {
     }
 }
 
-=head3 cancel
-
-    Cancel a local submission
-
-=cut
-
-sub cancel {
-    my ( $self, $params ) = @_;
-
-    # Update the submission's status
-    $params->{request}->status("CANCREQ")->store;
-}
-
 =head3 illview
 
    View and manage an ILL request
@@ -464,10 +451,7 @@ sub migrate {
     # Record where we're migrating from, so we can log that
     my $migrating_from = $request->backend;
 
-    # Cancel the original if appropriate
     if ( $request->status eq 'REQ' ) {
-        $request->_backend_capability( 'cancel', { request => $request } );
-
         # The orderid is no longer applicable
         $request->orderid(undef);
     }
@@ -1039,7 +1023,7 @@ sub status_graph {
         # Override REQ so we can rename the button
         # Talk about a sledgehammer to crack a nut
         REQ => {
-            prev_actions   => [ 'READY', 'REQREV', 'QUEUED', 'CANCREQ' ],
+            prev_actions   => [ 'READY', 'REQREV', 'QUEUED' ],
             id             => 'REQ',
             name           => 'Requested',
             ui_method_name => 'Request from Reprints Desk',
@@ -1048,7 +1032,7 @@ sub status_graph {
             ui_method_icon => 'fa-check',
         },
         MIG => {
-            prev_actions   => [ 'NEW', 'REQ', 'GENREQ', 'REQREV', 'QUEUED', 'CANCREQ', ],
+            prev_actions   => [ 'NEW', 'REQ', 'GENREQ', 'REQREV', 'QUEUED' ],
             id             => 'MIG',
             name           => 'Switched provider',
             ui_method_name => 'Switch provider',
