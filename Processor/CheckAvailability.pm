@@ -6,6 +6,7 @@ use JSON qw( decode_json from_json );
 use Encode qw( decode_utf8);
 use parent qw(Koha::Illrequest::SupplierUpdateProcessor);
 use Koha::Illbackends::ReprintsDesk::Base;
+use Koha::Plugin::Com::PTFSEurope::ReprintsDesk;
 
 sub new {
     my ($class) = @_;
