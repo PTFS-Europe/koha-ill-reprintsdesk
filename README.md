@@ -1,3 +1,8 @@
+# :warning: 24.05.x Koha onwards :warning:
+
+The recommended way to use this backend is its plugin version. See releases for latest plugin release.
+The master branch of this repo is only a compatibility maintenance branch for Kohas using the old backend Koha file structure.
+
 # Koha Interlibrary Loans ReprintsDesk backend
 
 This backend provides the ability to create Interlibrary Loan requests using the ReprintsDesk service.
