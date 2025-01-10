@@ -26,6 +26,7 @@ use JSON qw( encode_json );
 use CGI;
 use URI;
 
+use Koha;
 use Koha::Logger;
 use C4::Context;
 
@@ -55,8 +56,11 @@ sub new {
 
     my $uri = URI->new($url);
 
+    my $ua = LWP::UserAgent->new;
+    $ua->agent( 'Koha/' . Koha::version() );
+
     my $self = {
-        ua      => LWP::UserAgent->new,
+        ua      => $ua,
         cgi     => new CGI,
         logger  => Koha::Logger->get( { category => 'Koha.Illbackends.ReprintsDesk.Lib.API' } ),
         baseurl => $uri->scheme . "://" . $uri->host . ":" . $uri->port . "/api/v1/contrib/reprintsdesk"
